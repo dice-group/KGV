@@ -1,0 +1,3 @@
+200001	concept:company:state	concept:agentcontrols	concept:academicfield:databases
+200002	concept:company:state	concept:agentcontrols	concept:academicfield:system
+200003	concept:creditunion:michigan	concept:organizationhiredperson	concept:actor:bo_schembechler

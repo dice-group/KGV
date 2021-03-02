@@ -17,7 +17,7 @@ import java.util.List;
 public class BeliefTransferTest {
 
     @Test
-    public void Transfer_ShouldWork_WithValidFile() throws Exception {
+    public void Transfer_ShouldWork_WithValidYagoFile() throws Exception {
         BeliefTransform transform = new BeliefTransform();
         File resource = new ClassPathResource("data/TransformBeliefYagoTestFile.txt").getFile();
         List<SimpleRDF> actual = transform.Transform(resource,"\t");
@@ -38,6 +38,30 @@ public class BeliefTransferTest {
         Assertions.assertEquals(actual.get(2).getSubject(),"Arthur_Aikin");
         Assertions.assertEquals(actual.get(2).getPredicate(),"isCitizenOf");
         Assertions.assertEquals(actual.get(2).getObject(),"England");
+    }
+
+    @Test
+    public void Transfer_ShouldWork_WithValidNellFile() throws Exception {
+        BeliefTransform transform = new BeliefTransform();
+        File resource = new ClassPathResource("data/TransformBeliefNellTestFile.txt").getFile();
+        List<SimpleRDF> actual = transform.Transform(resource,"\t");
+
+        Assertions.assertEquals(actual.size(),3);
+
+        Assertions.assertEquals(actual.get(0).getId(),"200001");
+        Assertions.assertEquals(actual.get(0).getSubject(),"concept:company:state");
+        Assertions.assertEquals(actual.get(0).getPredicate(),"concept:agentcontrols");
+        Assertions.assertEquals(actual.get(0).getObject(),"concept:academicfield:databases");
+
+        Assertions.assertEquals(actual.get(1).getId(),"200002");
+        Assertions.assertEquals(actual.get(1).getSubject(),"concept:company:state");
+        Assertions.assertEquals(actual.get(1).getPredicate(),"concept:agentcontrols");
+        Assertions.assertEquals(actual.get(1).getObject(),"concept:academicfield:system");
+
+        Assertions.assertEquals(actual.get(2).getId(),"200003");
+        Assertions.assertEquals(actual.get(2).getSubject(),"concept:creditunion:michigan");
+        Assertions.assertEquals(actual.get(2).getPredicate(),"concept:organizationhiredperson");
+        Assertions.assertEquals(actual.get(2).getObject(),"concept:actor:bo_schembechler");
     }
 
     @Test
