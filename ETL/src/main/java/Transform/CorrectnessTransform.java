@@ -1,13 +1,12 @@
-package Transfer;
+package Transform;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class CorrectnessTransfer implements ITransfer<HashMap<String, Boolean>, File> {
+public class CorrectnessTransform implements ITransform<HashMap<String, Boolean>, File> {
     @Override
-    public HashMap<String, Boolean> Transfer(File input,String splitter) throws Exception {
+    public HashMap<String, Boolean> Transform(File input,String splitter) throws Exception {
 
         HashMap<String, Boolean> returnValue = new HashMap<>();
         Scanner scanner = new Scanner(input);
