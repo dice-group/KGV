@@ -22,8 +22,19 @@ public class BeliefTransform implements ITransform<List<SimpleRDF>, File>  {
         while (scanner.hasNextLine()) {
             line = scanner.nextLine();
             String[] words = line.split(splitter);
-            if(words.length!=4){
+            if(words.length<4){
                 throw new Exception("Could not parse this line:"+line);
+            }
+            if(words.length>4){
+                String w="";
+                for(int i = 0 ; i <= words.length - 4 ; i++){
+                    if(i+1<=words.length - 4) {
+                        w += words[3 + i] + "\t";
+                    }else{
+                        w += words[3 + i];
+                    }
+                }
+                words[3] = w;
             }
             SimpleRDF statement = new SimpleRDF(words[0],words[1],words[2],words[3]);
             returnValue.add(statement);

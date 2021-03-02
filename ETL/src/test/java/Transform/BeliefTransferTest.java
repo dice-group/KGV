@@ -40,6 +40,34 @@ public class BeliefTransferTest {
         Assertions.assertEquals(actual.get(2).getObject(),"England");
     }
 
+    /*17955	Giuseppe_Colizzi	created	All_the_Way	_Boys
+31098	Anna_Rice_Cooke	hasChild	Charles_Montague_Cooke	_Jr.
+            17956	Giuseppe_Colizzi	directed	All_the_Way	_Boys*/
+
+    @Test
+    public void Transfer_ShouldWork_WithMultiObjectYagoFile() throws Exception {
+        BeliefTransform transform = new BeliefTransform();
+        File resource = new ClassPathResource("data/TransformBeliefYagoMultiObjectTestFile.txt").getFile();
+        List<SimpleRDF> actual = transform.Transform(resource,"\t");
+
+        Assertions.assertEquals(actual.size(),3);
+
+        Assertions.assertEquals(actual.get(0).getId(),"17955");
+        Assertions.assertEquals(actual.get(0).getSubject(),"Giuseppe_Colizzi");
+        Assertions.assertEquals(actual.get(0).getPredicate(),"created");
+        Assertions.assertEquals(actual.get(0).getObject(),"All_the_Way\t_Boys");
+
+        Assertions.assertEquals(actual.get(1).getId(),"31098");
+        Assertions.assertEquals(actual.get(1).getSubject(),"Anna_Rice_Cooke");
+        Assertions.assertEquals(actual.get(1).getPredicate(),"hasChild");
+        Assertions.assertEquals(actual.get(1).getObject(),"Charles_Montague_Cooke\t_Jr.");
+
+        Assertions.assertEquals(actual.get(2).getId(),"17956");
+        Assertions.assertEquals(actual.get(2).getSubject(),"Giuseppe_Colizzi");
+        Assertions.assertEquals(actual.get(2).getPredicate(),"directed");
+        Assertions.assertEquals(actual.get(2).getObject(),"All_the_Way\t_Boys");
+    }
+
     @Test
     public void Transfer_ShouldWork_WithValidNellFile() throws Exception {
         BeliefTransform transform = new BeliefTransform();
