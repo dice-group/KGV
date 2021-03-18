@@ -6,7 +6,8 @@
 	<modules>
 		<module>ETL</module>
         <module>Pipeline</module>
-    </modules>
+		<module>QueryRunner</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
