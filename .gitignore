@@ -144,3 +144,8 @@ _*.txt
 
 /Results
 /ResultsFactCheck
+
+
+yagoDBpediaInstances.tsv
+yagoFacts.nt
+1yagoFacts.nt
