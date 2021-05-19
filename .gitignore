@@ -133,5 +133,14 @@ fabric.properties
 
 yago-2.ttl
 1000File.txt
+yagoDBpediaInstances.tsv
+yagoFacts.nt
 
 
+result*.txt
+prf*.txt
+_*.txt
+1*.txt
+
+/Results
+/ResultsFactCheck
