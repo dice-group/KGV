@@ -12,16 +12,19 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class runCopaalPipeline {
+public class RunCopaalPipeline {
 
-    static int pathLen = 2;
+    static int pathLen = 3;
     static boolean isVirtual = false;
 
     static String key =  "VT_"+isVirtual+"_pathLen_"+pathLen+"_";
 
     static String url = "http://localhost:8282/api/v1/validate?";
 
-    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/correct";
+    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/wrong/property";
+
+    //static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/correct";
+
 
     static String ProgressFileName = factBenchPath+"/"+key+"prf.txt";
     static String ProgressTextResults = factBenchPath+"/"+key+"textResults.txt";
@@ -31,6 +34,7 @@ public class runCopaalPipeline {
 
     public static void main(String[] args) throws Exception {
         Run();
+        //checkOneFile("/home/farshad/repos/factBench/factbench/test/wrong/mix/date/foundationPlace/foundationPlace_00139.ttl");
     }
 
     public static void Run() throws IOException, ParseException {
@@ -169,9 +173,9 @@ public class runCopaalPipeline {
         HttpRequestRunner hrr = new HttpRequestRunner(new RestTemplateBuilder());
 
         if(isVirtual) {
-            urlForCoppal = url + "subject=" + tripleExtractor.getSubjectUri() + "&object=" + tripleExtractor.getObjectUri() + "&property=" + tripleExtractor.getPredicateUri() + "&verbalize=False&virtualType=True+&pathlength="+pathLen;
+            urlForCoppal = url + "subject=" + tripleExtractor.getSubjectUri().replace("&","%26") + "&object=" + tripleExtractor.getObjectUri().replace("&","%26") + "&property=" + tripleExtractor.getPredicateUri().replace("&","%26") + "&verbalize=False&virtualType=True+&pathlength="+pathLen;
         }else {
-            urlForCoppal = url + "subject=" + tripleExtractor.getSubjectUri() + "&object=" + tripleExtractor.getObjectUri() + "&property=" + tripleExtractor.getPredicateUri() + "&verbalize=False&virtualType=False+&pathlength="+pathLen;
+            urlForCoppal = url + "subject=" + tripleExtractor.getSubjectUri().replace("&","%26") + "&object=" + tripleExtractor.getObjectUri().replace("&","%26") + "&property=" + tripleExtractor.getPredicateUri().replace("&","%26") + "&verbalize=False&virtualType=False+&pathlength="+pathLen;
         }
 
         urlForCoppal.replace("https","http");

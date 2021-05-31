@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RunFactcheckPipeline {
-    static String predicate = "birthPlace";
+    static String predicate = "doctoralAdvisor";
 
     static String adr ="/home/farshad/repos/KGV/ResultsFactCheck";
 
@@ -79,7 +79,7 @@ public class RunFactcheckPipeline {
 
         HttpRequestRunner hrr = new HttpRequestRunner(new RestTemplateBuilder());
 
-        String url = "http://localhost:8080/api/checkfact?";
+        String url = "http://localhost:8888/api/checkfact?";
 
         //.replace("property","ontology")
         for(SimpleRDF fact : forCheck){

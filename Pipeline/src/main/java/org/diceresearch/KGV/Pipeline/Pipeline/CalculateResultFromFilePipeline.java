@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class CalculateResultFromFilePipeline {
     static int pathLen = 3;
-    static String predicate = "location";
+    static String predicate = "owner";
     static boolean isVirtual = true;
 
     static String adr ="/home/farshad/repos/KGV/ResultsFacade";

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RunCopaalPipeline {
-    static int pathLen = 2;
+    static int pathLen = 3;
     static String predicate = "location";
     static boolean isVirtual = false;
 
@@ -58,7 +58,8 @@ public class RunCopaalPipeline {
 
     public static void Run() throws Exception {
         //HDDManager m = new HDDManager();
-
+/*progress.put(input.getPath(),json.get("graphScore").toString());
+        updateProgress();*/
         //String _1000File = m.giveFileLocation("Converted1000FileYago3.txt");
 
         File prf = new File(ProgressFileName);

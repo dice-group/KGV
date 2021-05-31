@@ -16,7 +16,7 @@ import java.util.List;
 
 public class RunFacadePipeline {
     static int pathLen = 2;
-    static String predicate = "TOTAL";
+    static String predicate = "3Correct";
     static boolean isVirtual = false;
 
     static String adr ="/home/farshad/repos/KGV/ResultsFacade";
@@ -78,7 +78,7 @@ public class RunFacadePipeline {
         //.replace("property","ontology")
         System.out.println("there are "+forCheck.size()+" facts for check");
 
-        int pas = 65;
+        int pas = 140;
 
         for(SimpleRDF fact : forCheck){
 
@@ -152,6 +152,10 @@ public class RunFacadePipeline {
 
             }
 
+            if(json.get("facadeScore").toString().equals("0.0")){
+                Integer cs = sampleOfEachPredicate.get(fact.getPredicate());
+                sampleOfEachPredicate.put(fact.getPredicate(), cs - 1);
+            }
             updateProgress();
             Thread.sleep(2000);
         }

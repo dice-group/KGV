@@ -149,3 +149,7 @@ _*.txt
 yagoDBpediaInstances.tsv
 yagoFacts.nt
 1yagoFacts.nt
+Generated*
+prf*
+resultIsValid*
+result*
