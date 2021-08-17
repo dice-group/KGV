@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+// just transform the dataset from yago and nell which mentioned in the kgQ paper
 public class ETLPipeline {
     public static void main(String[] args) throws Exception {
         Run();

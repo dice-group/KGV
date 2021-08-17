@@ -6,10 +6,10 @@ import org.diceresearch.KGV.ETL.Extract.IExtractor;
 
 import java.io.File;
 import java.util.Scanner;
-
+// read the facade result file and count the number of true facts for copaal fact check and facade
 public class CalculateResultFromFilePipeline {
     static int pathLen = 3;
-    static String predicate = "owner";
+    static String predicate = "location";
     static boolean isVirtual = true;
 
     static String adr ="/home/farshad/repos/KGV/ResultsFacade";

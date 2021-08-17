@@ -20,10 +20,11 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
+//run coppal pipeline , read file for each fact call copaal and save result
 public class RunCopaalPipeline {
-    static int pathLen = 3;
-    static String predicate = "location";
-    static boolean isVirtual = false;
+    static int pathLen = 2;
+    static String predicate = "affiliation";
+    static boolean isVirtual = true;
 
     static String adr ="/home/farshad/repos/KGV/Results";
 
@@ -91,7 +92,7 @@ public class RunCopaalPipeline {
 
         HttpRequestRunner hrr = new HttpRequestRunner(new RestTemplateBuilder());
 
-        String url = "http://localhost:8282/api/v1/validate?";
+        String url = "http://localhost:8383/api/v1/validate?";
 
         //.replace("property","ontology")
         for(SimpleRDF fact : forCheck){

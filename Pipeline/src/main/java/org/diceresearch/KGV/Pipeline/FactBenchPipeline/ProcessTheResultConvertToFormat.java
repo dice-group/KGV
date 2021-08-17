@@ -20,13 +20,15 @@ public class ProcessTheResultConvertToFormat {
     static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/VT_false_pathLen_2_textResults.tsv";
     static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/wrong/mix/RESULT_VT_false_pathLen_2_wrong.nt";*/
 
-    static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/wrong/property/property.nt";
-    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/wrong/property/VT_true_pathLen_2_textResults.tsv";
-    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/wrong/property/RESULT_VT_true_pathLen_2_wrong.nt";
+/*    static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/wrong/property/property.nt";
+    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/wrong/property/VT_true_pathLen_3_textResults.tsv";//ERR_IDS_VT_false_pathLen_3_textResults
+    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/wrong/property/RESULT_VT_true_pathLen_3_wrong.nt";
+    //static String resultFileErrorIds = "/home/farshad/repos/factBench/factbench/test/wrong/property/ErrorIDS.nt";*/
 
-    /*static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/correct/true.nt";
-    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/correct/VT_true_pathLen_2_textResults.tsv";
-    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/correct/RESULT_VT_true_pathLen_2_correct.nt";*/
+
+    static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/correct/true.nt";
+    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/correct/VT_true_pathLen_3_textResults.tsv";
+    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/correct/RESULT_VT_true_pathLen_3_correct.nt";
 
     // use refrence file to find the ID
     // generate result finle in a format
@@ -55,17 +57,32 @@ public class ProcessTheResultConvertToFormat {
                 continue;
             }*/
 
+
             String subject = forConvert.get(1);
             String predicate = forConvert.get(2);
             String object = forConvert.get(3);
             Double score = Double.parseDouble(forConvert.get(4));
 
             String id = searchId(model,subject,predicate,object);
-            writeResult(id,subject,predicate,object,score);
+
+            if(id.equals("0")){
+                /*try(FileWriter fw = new FileWriter(resultFileErrorIds, true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    PrintWriter out = new PrintWriter(bw))
+                {
+                    out.println(forConvert.get(0)+",");
+                } catch (IOException e) {
+
+                }*/
+                throw new Exception(forConvert.get(0));
+            }
+            else {
+                writeResult(id, subject, predicate, object, score,resultFileFinalPath);
+            }
         }
     }
 
-    private static String searchId(Model model, String subject, String predicate, String object) throws Exception {
+    public static String searchId(Model model, String subject, String predicate, String object) throws Exception {
 
         String query = "select ?a WHERE { " +
                 "?a <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <"+object.replace("%26","&")+">." +
@@ -81,7 +98,9 @@ public class ProcessTheResultConvertToFormat {
             return qs.get("?a").toString();
         }
 
-        throw new Exception(" Can not find ID subject"+subject+" predicate "+ predicate + " object "+ object);
+        //throw new Exception(" Can not find ID subject"+subject+" predicate "+ predicate + " object "+ object);
+        System.out.println(" Can not find ID subject"+subject+" predicate "+ predicate + " object "+ object);
+        return "0";
     }
 
     //<http://swc2017.aksw.org/task2/dataset/fb_mix-1914> <http://swc2017.aksw.org/hasTruthValue> "1.0"^^<http://www.w3.org/2001/XMLSchema#double> .
@@ -89,7 +108,7 @@ public class ProcessTheResultConvertToFormat {
     //<http://swc2017.aksw.org/task2/dataset/fb_mix-1914> <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://dbpedia.org/ontology/foundationPlace> .
     //<http://swc2017.aksw.org/task2/dataset/fb_mix-1914> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://dbpedia.org/resource/Livonia,_Michigan> .
     //<http://swc2017.aksw.org/task2/dataset/fb_mix-1914> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
-    private static void writeResult(String id, String subject, String predicate, String object, Double score) {
+    public static void writeResult(String id, String subject, String predicate, String object, Double score,String outPutPath) {
         StringBuilder sb = new StringBuilder();
 
         id = "<"+id+">";
@@ -119,7 +138,7 @@ public class ProcessTheResultConvertToFormat {
         sb.append(id);
         sb.append(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .");
 
-        try(FileWriter fw = new FileWriter(resultFileFinalPath, true);
+        try(FileWriter fw = new FileWriter(outPutPath, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {

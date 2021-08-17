@@ -8,12 +8,19 @@ import org.diceresearch.KGV.ETL.Transform.TabSeperetadResultToMapTransform;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+/*
+ read text result of coppal and fact check with this format
+<https://dbpedia.org/resource/Wenceslas_Lauret>	<http://dbpedia.org/ontology/birthPlace>	<https://dbpedia.org/resource/Tarbes>	0.9972936828287049
+then convert and save in file with this format
+<https://dbpedia.org/resource/Michael_Moriarty>	<http://dbpedia.org/ontology/award>	<https://dbpedia.org/resource/Tony_Award>	0.9845335032459794	0.38461538461538464	0.9845335032459794
+the first score is copaal score second one is factcheck and the last is facade score
+*/
 
 public class GenerateFacadeFromCOPAALandFactcheckResultPipeline {
 
-    static int pathLen = 3;
-    static String predicate = "musicComposer";
-    static boolean isVirtual = false;
+    static int pathLen = 2;
+    static String predicate = "location";
+    static boolean isVirtual = true;
 
     static String adrCOPAAL ="/home/farshad/repos/KGV/Results";
     static String sssCOPAAL = predicate+"_VT_"+isVirtual+"_pl_"+pathLen;

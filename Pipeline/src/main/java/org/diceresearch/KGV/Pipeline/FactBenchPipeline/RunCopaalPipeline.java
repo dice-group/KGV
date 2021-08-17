@@ -4,37 +4,76 @@ import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.apache.commons.io.FilenameUtils;
+import org.diceresearch.KGV.ETL.Extract.FileExtractorOutOfPackage;
 import org.diceresearch.KGV.QueryRunner.QueryRunner.HttpRequestRunner;
 import org.diceresearch.KGV.utility.TripleExtractor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class RunCopaalPipeline {
 
-    static int pathLen = 3;
+    static int pathLen = 2;
     static boolean isVirtual = false;
 
-    static String key =  "VT_"+isVirtual+"_pathLen_"+pathLen+"_";
+    //static String Counter = "ApproximatingCountRetriever";
+    static String Counter = "PropPathBasedPairCountRetriever";
 
-    static String url = "http://localhost:8282/api/v1/validate?";
+    //static String PathScore="NPMI";
+    static String PathScore="PNPMI";
 
-    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/wrong/property";
+    static String ScoreSummarist="AdaptedRootMeanSquareSummarist";
+    //static String ScoreSummarist="CubicMeanSummarist";
+    //static String ScoreSummarist="FixedSummarist";    //FixedSummarist <-> SquaredAverageSummarist
+    //static String ScoreSummarist="HigherOrderMeanSummarist";
+    //static String ScoreSummarist="NegScoresHandlingSummarist";
+    //static String ScoreSummarist="OriginalSummarist";
+    //static String ScoreSummarist="SquaredAverageSummarist";
 
     //static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/correct";
+    //static String correctNess = "true";
+
+    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/wrong/property";
+    static String correctNess = "false";
+
+    //static String key =  "ERR_IDS_VT_"+isVirtual+"_pathLen_"+pathLen+"_";
+
+    static String key =  "VT_"+isVirtual+"_pathLen_"+pathLen+"_Counter_"+Counter+"_PathScore_"+PathScore+"_ScoreSummarist_"+ScoreSummarist+"_";
+
+    static String url = "http://localhost:8282/api/v1/validate?";
 
 
     static String ProgressFileName = factBenchPath+"/"+key+"prf.txt";
     static String ProgressTextResults = factBenchPath+"/"+key+"textResults.txt";
     static String ProgressResults = factBenchPath+"/"+key+"textResults.tsv";
 
+    static String AllTheResultTogether = "/home/farshad/repos/CopaalConfigTestResults/results.tsv";
+
     static HashMap<String,String> progress = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
         Run();
-        //checkOneFile("/home/farshad/repos/factBench/factbench/test/wrong/mix/date/foundationPlace/foundationPlace_00139.ttl");
+        //checkOneFile("/home/farshad/repos/factBench/factbench/test/wrong/property/subsidiary/subsidiary_00077.ttl");
+        //runForErrorIds();
+    }
+
+    private static void runForErrorIds() throws IOException, ClassNotFoundException, ParseException {
+        String adrFileErrorIds = "/home/farshad/repos/factBench/factbench/test/wrong/property/ErrorIDS.nt";
+        FileExtractorOutOfPackage ex = new FileExtractorOutOfPackage();
+        File f = ex.Extract(adrFileErrorIds);
+        Scanner scanner = new Scanner(f);
+        String line = "";
+
+        while (scanner.hasNextLine()) {
+            line = scanner.nextLine();
+            String result = checkOneFile(line);
+        }
+
+        scanner.close();
     }
 
     public static void Run() throws IOException, ParseException {
@@ -67,20 +106,21 @@ public class RunCopaalPipeline {
         }
     }*/
 
-    public static void checkOneFile(String path ) throws IOException, ParseException {
+    public static String checkOneFile(String path ) throws IOException, ParseException {
         File file = new File(path);
         //check fact
         String result = checkFactFromFile(file);
         // add Progress
         progress.put(file.getPath(),result);
         // write to file
-        String FileName = "result_"+file.getName();
+        /*String FileName = "result_"+file.getName();
         try (PrintWriter out = new PrintWriter(file.getParent()+"/"+FileName+"r")) {
             out.println(result);
-        }
+        }*/
         System.out.println(file.toPath());
         System.out.println(result);
         System.out.println("-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-==-=-=-=-");
+        return result;
     }
 
     public static void checkFacts(String path) throws IOException, ParseException {
@@ -105,7 +145,7 @@ public class RunCopaalPipeline {
                     progress.put(file.getPath(),result);
                     // write to file
                     String FileName = "result_"+file.getName();
-                    try (PrintWriter out = new PrintWriter(file.getParent()+"/"+FileName+"r")) {
+                    try (PrintWriter out = new PrintWriter(file.getParent()+"/"+FileName+".resultCopalConfig_"+key)) {
                         out.println(result);
                     }
                     // update progress
@@ -113,12 +153,27 @@ public class RunCopaalPipeline {
 
                     try {
 
-
                         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(ProgressTextResults, true)));
 
                         out.println(file.toPath());
                         out.println(result);
                         out.println("-=-=-=-=-=-=-==-=-==-=-=-=-==-=-=-=-=-=-=-==-=-=-=-");
+                        out.close();
+                    }catch (IOException e) {
+                        //exception handling left as an exercise for the reader
+                    }
+
+
+                    // write result in one File
+
+                    try {
+
+                        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(AllTheResultTogether, true)));
+
+
+                        LocalDate time = LocalDate.now(); // Create a date object
+                        String toPrint =time.toString()+"\t"+pathLen+"\t"+isVirtual+"\t"+Counter+"\t"+PathScore+"\t"+ScoreSummarist+"\t"+correctNess+"\t"+result;
+                        out.println(toPrint);
                         out.close();
                     }catch (IOException e) {
                         //exception handling left as an exercise for the reader
@@ -167,6 +222,7 @@ public class RunCopaalPipeline {
 
         TripleExtractor tripleExtractor = new TripleExtractor(fileData, false);
 
+
         String urlForCoppal = "";
         String respons="";
 
@@ -184,21 +240,21 @@ public class RunCopaalPipeline {
 
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(respons);
-        JSONObject inputTriple = (JSONObject)json.get("inputTriple");
+        //JSONObject inputTriple = (JSONObject)json.get("inputTriple");
 
         try(FileWriter fw = new FileWriter(ProgressResults, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {
-            out.println(input.getAbsolutePath()+"\t"+inputTriple.get("subject").toString()+"\t"+inputTriple.get("property").toString()+"\t"+inputTriple.get("object").toString()+"\t"+json.get("graphScore").toString());
+            out.println(input.getAbsolutePath()+"\t"+tripleExtractor.getSubjectUri().replace("&","%26")+"\t"+tripleExtractor.getPredicateUri().replace("&","%26")+"\t"+tripleExtractor.getObjectUri().replace("&","%26")+"\t"+json.get("veracityValue").toString());
         } catch (IOException e) {
-
+String m = e.getMessage();
         }
 
         /*progress.put(input.getPath(),json.get("graphScore").toString());
         updateProgress();*/
 
-        return respons;
+        return tripleExtractor.getSubjectUri().replace("&","%26")+"\t"+tripleExtractor.getPredicateUri().replace("&","%26")+"\t"+tripleExtractor.getObjectUri().replace("&","%26")+"\t"+respons;
     }
 
     private static String ReadFile(File input) throws FileNotFoundException {

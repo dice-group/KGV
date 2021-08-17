@@ -14,6 +14,9 @@ package org.diceresearch.KGV.Pipeline.Pipeline;
         import java.util.HashMap;
         import java.util.List;
 
+        // read a file
+// for each fact (specified predicate) call frockg (facade) and save the result
+
 public class RunFacadeBasedOnPredicatePipeline {
     static int pathLen = 3;
     static String predicate = "child";

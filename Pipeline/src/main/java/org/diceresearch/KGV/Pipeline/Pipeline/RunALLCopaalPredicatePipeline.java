@@ -1,5 +1,5 @@
 package org.diceresearch.KGV.Pipeline.Pipeline;
-
+// run coppal pipeline for several predicates
 public class RunALLCopaalPredicatePipeline {
     public static void main(String[] args) throws Exception {
         Run();

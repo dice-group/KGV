@@ -12,9 +12,9 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
-
+// check facts with factcheck
 public class RunFactcheckPipeline {
-    static String predicate = "doctoralAdvisor";
+    static String predicate = "affiliation";
 
     static String adr ="/home/farshad/repos/KGV/ResultsFactCheck";
 

@@ -14,6 +14,10 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 
+
+// read a file
+// for each fact  call frockg (facade) and save the result
+// can pass x lines of inout fact and continue
 public class RunFacadePipeline {
     static int pathLen = 2;
     static String predicate = "3Correct";

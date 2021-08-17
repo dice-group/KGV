@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Set;
 
+// example of pipeline for extracting predicates from file
 public class ExtractPredicatesPipeline {
     public static void main(String[] args) throws Exception {
         Run();
