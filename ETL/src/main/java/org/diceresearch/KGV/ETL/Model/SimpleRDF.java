@@ -1,5 +1,7 @@
 package org.diceresearch.KGV.ETL.Model;
 
+import java.util.Objects;
+
 public class SimpleRDF {
     private String Id;
     private String Subject;
@@ -51,5 +53,21 @@ public class SimpleRDF {
     @Override
     public String toString() {
         return this.getSubject()+" "+this.getPredicate()+" "+this.getObject();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleRDF simpleRDF = (SimpleRDF) o;
+        return Objects.equals(getId(), simpleRDF.getId()) &&
+                Objects.equals(getSubject(), simpleRDF.getSubject()) &&
+                Objects.equals(getPredicate(), simpleRDF.getPredicate()) &&
+                Objects.equals(getObject(), simpleRDF.getObject());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getSubject(), getPredicate(), getObject());
     }
 }

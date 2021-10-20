@@ -34,17 +34,17 @@ public class RunCopaalPipeline {
     //static String ScoreSummarist="OriginalSummarist";
     //static String ScoreSummarist="SquaredAverageSummarist";
 
-    //static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/correct";
-    //static String correctNess = "true";
+    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/correct";
+    static String correctNess = "true";
 
-    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/wrong/property";
-    static String correctNess = "false";
+    //static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/wrong/property";
+    //static String correctNess = "false";
 
     //static String key =  "ERR_IDS_VT_"+isVirtual+"_pathLen_"+pathLen+"_";
 
-    static String key =  "VT_"+isVirtual+"_pathLen_"+pathLen+"_Counter_"+Counter+"_PathScore_"+PathScore+"_ScoreSummarist_"+ScoreSummarist+"_";
+    static String key =  "tempVT_"+isVirtual+"_pathLen_"+pathLen+"_Counter_"+Counter+"_PathScore_"+PathScore+"_ScoreSummarist_"+ScoreSummarist+"_";
 
-    static String url = "http://localhost:8282/api/v1/validate?";
+    static String url = "http://localhost:8080/api/v1/validate?";
 
 
     static String ProgressFileName = factBenchPath+"/"+key+"prf.txt";
