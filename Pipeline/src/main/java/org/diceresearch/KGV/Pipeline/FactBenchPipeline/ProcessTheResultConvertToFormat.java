@@ -20,15 +20,32 @@ public class ProcessTheResultConvertToFormat {
     static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/VT_false_pathLen_2_textResults.tsv";
     static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/wrong/mix/RESULT_VT_false_pathLen_2_wrong.nt";*/
 
-/*    static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/wrong/property/property.nt";
-    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/wrong/property/VT_true_pathLen_3_textResults.tsv";//ERR_IDS_VT_false_pathLen_3_textResults
-    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/wrong/property/RESULT_VT_true_pathLen_3_wrong.nt";
-    //static String resultFileErrorIds = "/home/farshad/repos/factBench/factbench/test/wrong/property/ErrorIDS.nt";*/
+/*
+    static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/wrong/domain/groundTruth6predicatesFalseDomain.nt";
+    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/wrong/domain/useTentris0.5_Counter_PreProcess_PathScore_NPMI_ScoreSummarist_AdaptedRootMeanSquareSummarist_textResults.tsv";//ERR_IDS_VT_false_pathLen_3_textResults
+    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/wrong/domain/useTentris0.5_Counter_PreProcess_PathScore_NPMI_ScoreSummarist_AdaptedRootMeanSquareSummarist_textResults.nt";
+*/
+
+    //static String resultFileErrorIds = "/home/farshad/repos/factBench/factbench/test/wrong/property/ErrorIDS.nt";
 
 
-    static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/correct/true.nt";
-    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/correct/VT_true_pathLen_3_textResults.tsv";
-    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/correct/RESULT_VT_true_pathLen_3_correct.nt";
+
+
+
+/*
+    static String refrenceFilePath = "/home/farshad/repos/factBench/factbench/test/correct/groundTruth6predicatesTrue.nt";
+    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/correct/useTentris0.5_Counter_PreProcess_PathScore_NPMI_ScoreSummarist_AdaptedRootMeanSquareSummarist_textResults.tsv";
+    static String resultFileFinalPath = "/home/farshad/repos/factBench/factbench/test/correct/useTentris0.5_Counter_PreProcess_PathScore_NPMI_ScoreSummarist_AdaptedRootMeanSquareSummarist_textResults.nt";
+*/
+
+
+    static String refrenceFilePath = "/home/farshad/Desktop/preproccessResult/groundTruthFoundationPlace.nt";
+
+    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/correct/useTentris0.5_Counter_PreProcess_PathScore_NPMI_ScoreSummarist_AdaptedRootMeanSquareSummarist_textResults.tsv";
+    static String resultFileFinalPath = "/home/farshad/Desktop/preproccessResult/FoundationPlace/0.5/FoundationPlaceTrue.nt";
+
+/*    static String resultFileToProccessPath ="/home/farshad/repos/factBench/factbench/test/wrong/domain/useTentris0.9_Counter_PreProcess_PathScore_NPMI_ScoreSummarist_AdaptedRootMeanSquareSummarist_textResults.tsv";
+    static String resultFileFinalPath = "/home/farshad/Desktop/preproccessResult/FoundationPlace/0.9/FoundationPlaceFalse.nt";*/
 
     // use refrence file to find the ID
     // generate result finle in a format
@@ -63,6 +80,10 @@ public class ProcessTheResultConvertToFormat {
             String object = forConvert.get(3);
             Double score = Double.parseDouble(forConvert.get(4));
 
+            if(!predicateIsValid(predicate)){
+                continue;
+            }
+
             String id = searchId(model,subject,predicate,object);
 
             if(id.equals("0")){
@@ -80,6 +101,31 @@ public class ProcessTheResultConvertToFormat {
                 writeResult(id, subject, predicate, object, score,resultFileFinalPath);
             }
         }
+    }
+
+    private static boolean predicateIsValid(String predicate) {
+        /*if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/birthPlace")){
+            return true;
+        }
+       if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/deathPlace")){
+            return true;
+}*/
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/foundationPlace")){
+            return true;
+        }/*
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/spouse")){
+            return true;
+        }
+
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/starring")){
+            return true;
+        }
+
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/subsidiary")){
+            return true;
+        }*/
+
+        return false;
     }
 
     public static String searchId(Model model, String subject, String predicate, String object) throws Exception {

@@ -13,23 +13,19 @@ import java.util.Scanner;
 
 public class GenerateGroundTruthFile {
 
+    static String predicate = "Subsidiary";
 
-/*    static String outPutDestination = "/home/farshad/repos/factBench/factbench/test/correct/true.nt";
+    static String outPutDestination = "/home/farshad/repos/factBench/factbench/test/correct/groundTruth"+predicate+".nt";
     static String startCrawlPath = "/home/farshad/repos/factBench/factbench/test/correct";
     // use as prefix for each id then follow by a number
-    static String idKey = "true-";*/
-
-/*    static String outPutDestination = "/home/farshad/repos/factBench/factbench/test/wrong/mix/fb_mix.nt";
-    static String startCrawlPath = "/home/farshad/repos/factBench/factbench/test/wrong/mix";
-    // use as prefix for each id then follow by a number
-    static String idKey = "fb_mix-";*/
-
-    static String outPutDestination = "/home/farshad/repos/factBench/factbench/test/wrong/property/property.nt";
-    static String startCrawlPath = "/home/farshad/repos/factBench/factbench/test/wrong/property";
-    // use as prefix for each id then follow by a number
-    static String idKey = "property-";
-
+    static String idKey = "true-";
     static boolean isTrue = true;
+
+/*    static String outPutDestination = "/home/farshad/repos/factBench/factbench/test/wrong/domain/groundTruth"+predicate+".nt";
+    static String startCrawlPath = "/home/farshad/repos/factBench/factbench/test/wrong/domain";
+    // use as prefix for each id then follow by a number
+    static String idKey = "domain-";
+    static boolean isTrue = false;*/
 
     public static void main(String[] args) throws Exception {
         Run();
@@ -54,6 +50,9 @@ public class GenerateGroundTruthFile {
                     String idPhrase = idKey+id;
                     String subject = triples.getSubjectUri();
                     String predicate = triples.getPredicateUri();
+                    if(!predicateIsValid(predicate)){
+                        continue;
+                    }
                     String object = triples.getObjectUri();
 
                     // write to file
@@ -132,4 +131,27 @@ public class GenerateGroundTruthFile {
             throw e;
         }
     }
+
+    private static boolean predicateIsValid(String predicate) {
+/*        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/birthPlace")){
+            return true;
+        }
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/deathPlace")){
+            return true;
+        }
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/foundationPlace")){
+            return true;
+        }
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/spouse")){
+            return true;
+        }
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/starring")){
+            return true;
+        }*/
+        if(predicate.equalsIgnoreCase("http://dbpedia.org/ontology/subsidiary")){
+            return true;
+        }
+        return false;
+    }
+
 }
