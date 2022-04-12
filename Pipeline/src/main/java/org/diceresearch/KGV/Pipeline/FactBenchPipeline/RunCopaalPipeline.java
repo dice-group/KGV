@@ -4,17 +4,20 @@ import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.jena.base.Sys;
 import org.diceresearch.KGV.ETL.Extract.FileExtractorOutOfPackage;
 import org.diceresearch.KGV.QueryRunner.QueryRunner.HttpRequestRunner;
 import org.diceresearch.KGV.utility.TripleExtractor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+
+/**
+ * this class is runnable
+ * get a folder , run each fact over Copaal and save the result
+ *
+ */
 
 public class RunCopaalPipeline {
 
@@ -47,6 +50,7 @@ public class RunCopaalPipeline {
 
     static String key =  "umair"+"_Counter_"+Counter+"_PathScore_"+PathScore+"_ScoreSummarist_"+ScoreSummarist+"_";
 
+    // COPAAL endpoint
     static String url = "http://synthg-fact-leapfrog.cs.upb.de:80/api/v1/validate?";
     //static String url = "http://localhost:8080/api/v1/validate?";
 
