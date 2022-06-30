@@ -1,0 +1,16 @@
+yago:actedIn
+yago:created
+yago:diedIn
+yago:directed
+yago:hasAcademicAdvisor
+yago:hasChild
+yago:hasOfficialLanguage
+yago:isCitizenOf
+yago:isKnownFor
+yago:isLeaderOf
+yago:isLocatedIn
+yago:isMarriedTo
+yago:livesIn
+yago:produced
+yago:wasBornIn
+yago:worksAt
