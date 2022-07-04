@@ -37,11 +37,13 @@ public class RunCopaalPipeline {
 
 
 
-/*    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/correct";
-    static String correctNess = "true";*/
+    //static String factBenchPath = "/home/farshad/repos/factBench/factbench/train/correct";
+    static String factBenchPath = "/home/farshad/repos/BPDP_Dataset/Test/True";
+    static String correctNess = "true";
 
-    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/wrong/range";
-    static String correctNess = "false";
+    //static String factBenchPath = "/home/farshad/repos/factBench/factbench/train/wrong";
+/*    static String factBenchPath = "/home/farshad/repos/BPDP_Dataset/Train/False";
+    static String correctNess = "false";*/
 
 /*    static String factBenchPath = "/home/farshad/repos/factBench/factbench/test/wrong/property";
     static String correctNess = "false"*/;

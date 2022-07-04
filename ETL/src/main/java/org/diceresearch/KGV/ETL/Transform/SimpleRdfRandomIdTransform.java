@@ -17,6 +17,7 @@ public class SimpleRdfRandomIdTransform implements ITransform <List<SimpleRDF>, 
         long progress = 0;
         while (scanner.hasNextLine()) {
             line = scanner.nextLine();
+            line = line.replace("<","").replace(".","").replace(">","");
             String[] parts = line.split(splitter);
             SimpleRDF temp = new SimpleRDF( UUID.randomUUID().toString(), parts[0],parts[1],parts[2]);
             retval.add(temp);
