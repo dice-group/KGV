@@ -1,6 +1,7 @@
 package org.diceresearch.KGV.Pipeline.Pipeline;
 
 import org.diceresearch.KGV.ETL.Extract.FileExtractor;
+import org.diceresearch.KGV.ETL.Extract.FileExtractorOutOfPackage;
 import org.diceresearch.KGV.ETL.Extract.IExtractor;
 import org.diceresearch.KGV.ETL.Model.SimpleLabeledRDF;
 import org.diceresearch.KGV.ETL.Transform.BeliefTransform;
@@ -18,9 +19,9 @@ public class TTLFilePipeLine {
         Run();
     }
     public static void Run() throws Exception {
-        String ttlFilePath = "data/yago-2.ttl";
+        String ttlFilePath = "/home/farshad/repos/KGV/KGEvalData/YAGO/yago_subset.ttl";
 
-        IExtractor extractor = new FileExtractor();
+        IExtractor extractor = new FileExtractorOutOfPackage();
 
         File ttlFile = (File) extractor.Extract(ttlFilePath);
 

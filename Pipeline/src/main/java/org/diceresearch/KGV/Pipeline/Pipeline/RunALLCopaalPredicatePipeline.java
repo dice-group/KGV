@@ -11,7 +11,7 @@ public class RunALLCopaalPredicatePipeline {
         for(String p:predicates){
 
                 //RunCopaalPipeline.Run(p,2,false);
-                RunCopaalPipeline.Run(p,2,true);
+                //RunCopaalPipeline.Run(p);
                 //RunCopaalPipeline.Run(p,3,false);
                 //RunCopaalPipeline.Run(p,3,true);
 

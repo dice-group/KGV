@@ -2,68 +2,67 @@ package org.diceresearch.KGV.Pipeline.Pipeline;
 
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
-import org.apache.jena.dboe.sys.Sys;
-import org.diceresearch.KGV.ETL.DiskManager.HDDManager;
-import org.diceresearch.KGV.ETL.Extract.FileExtractor;
 import org.diceresearch.KGV.ETL.Extract.FileExtractorOutOfPackage;
 import org.diceresearch.KGV.ETL.Extract.IExtractor;
-import org.diceresearch.KGV.ETL.Load.FileLoader;
 import org.diceresearch.KGV.ETL.Model.SimpleRDF;
-import org.diceresearch.KGV.ETL.Transform.SimpleRdfRandomIdTransform;
-import org.diceresearch.KGV.ETL.Transform.ToDBpediaTransform;
-import org.diceresearch.KGV.ETL.Transform.ToHashMapTransform;
+import org.diceresearch.KGV.ETL.Transform.*;
 import org.diceresearch.KGV.QueryRunner.QueryRunner.HttpRequestRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
+@Service
 //run coppal pipeline , read file for each fact call copaal and save result
 public class RunCopaalPipeline {
-    static int pathLen = 3;
-    static String predicate = "affiliation";
-    static boolean isVirtual = true;
+    String fileNameConst ;
+    String copaalEndPoint;
 
-    static String adr ="/home/farshad/repos/ontotextData/Results";
-    static String fileName="/home/farshad/repos/ontotextData/trueDataSet.nt";
+    String locationForSaveTheResults ;
+    String fileToProcess ;
 
-    static String sss = predicate+"_VT_"+isVirtual+"_pl_"+pathLen;
-    static String ProgressFileName = adr+"/prf_"+sss+".txt";
-    static String FileNameValid = adr+"/resultIsValid_"+sss+".txt";
-    static String FileName = adr+"/result_"+sss+".txt";
+    String ProgressFileName;
+    String FileNameValid;
+    String FileName;
+
+    Set<String> acceptAblePredicates;
 
     static HashMap<String,String> progress = new HashMap<>();
 
 
+    public RunCopaalPipeline(String fileToProcess , String locationForSaveTheResults, String fileNameConst, String copaalEndPoint, String acceptablePredicates){
+        this.locationForSaveTheResults = locationForSaveTheResults;
+        this.fileToProcess = fileToProcess;
+        this.fileNameConst = fileNameConst;
+        this.copaalEndPoint = copaalEndPoint;
+        String[] predicates = acceptablePredicates.split(",");
+        System.out.println(predicates.length+ " predicates are acceptable");
 
-    public static void main(String[] args) throws Exception {
-        Run();
+        this.acceptAblePredicates = new HashSet<String>();
+        for(String p:predicates){
+            this.acceptAblePredicates.add(p);
+        }
     }
 
-    public static String key(SimpleRDF input){
+
+    private String key(SimpleRDF input){
         return input.getSubject()+input.getPredicate()+input.getObject();
     }
 
-    public static void Run(String _predicate,int _pathLen,boolean _isVirtual) throws Exception{
-        pathLen = _pathLen;
-        predicate = _predicate;
-        isVirtual = _isVirtual;
+    public void run() throws Exception {
+        System.out.println("Start running the pipeline");
+        ProgressFileName = locationForSaveTheResults+"prf_"+fileNameConst+".txt";
+        FileNameValid = locationForSaveTheResults+"resultIsValid_"+fileNameConst+".txt";
+        FileName = locationForSaveTheResults+"result_"+fileNameConst+".txt";
 
-        sss = predicate+"_VT_"+isVirtual+"_pl_"+pathLen;
-        ProgressFileName = "/home/farshad/repos/KGV/prf_"+sss+".txt";
-        FileNameValid = "/home/farshad/repos/KGV/resultIsValid_"+sss+".txt";
-        FileName = "/home/farshad/repos/KGV/result_"+sss+".txt";
-        Run();
-    }
 
-    public static void Run() throws Exception {
-        //HDDManager m = new HDDManager();
-/*progress.put(input.getPath(),json.get("graphScore").toString());
-        updateProgress();*/
-        //String _1000File = m.giveFileLocation("Converted1000FileYago3.txt");
+        System.out.println("ProgressFileName is : "+ProgressFileName);
+        System.out.println("FileNameValid is : "+FileNameValid);
+        System.out.println("FileName is : "+FileName);
 
         File prf = new File(ProgressFileName);
         if(prf.exists()){
@@ -85,19 +84,23 @@ public class RunCopaalPipeline {
 
         IExtractor extractor = new FileExtractorOutOfPackage();
 
-        File rdf4Check = (File) extractor.Extract(fileName);
+        File rdf4Check = (File) extractor.Extract(fileToProcess);
 
-        SimpleRdfRandomIdTransform transform = new SimpleRdfRandomIdTransform();
+        //SimpleRdfRandomIdTransform transform = new SimpleRdfRandomIdTransform();
+        TTLtoSimpleRDFTransform transform = new TTLtoSimpleRDFTransform();
+        RDFModelTransform rdfTransform = new RDFModelTransform();
+        List<SimpleRDF> forCheck = transform.Transform(rdfTransform.Transform(rdf4Check,"")," ");
 
-        List<SimpleRDF> forCheck = transform.Transform(rdf4Check," ");
+        System.out.println(forCheck.size() + " facts for check extracted");
 
         HttpRequestRunner hrr = new HttpRequestRunner(new RestTemplateBuilder());
-
-        String url = "http://localhost:8080/api/v1/validate?";
 
         //.replace("property","ontology")
         int counter = 0;
         for(SimpleRDF fact : forCheck){
+            if(!acceptAblePredicates.contains(fact.getPredicate())){
+                continue;
+            }
             counter = counter +1;
 
 /*            if(!fact.getPredicate().contains(predicate)){
@@ -115,21 +118,10 @@ public class RunCopaalPipeline {
             String urlForCoppal = "";
 
 
-            urlForCoppal = url + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate();
+            urlForCoppal = copaalEndPoint + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate();
 
-            /*if(isVirtual) {
-                urlForCoppal = url + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate() + "&virtualType=True+&pathlength="+pathLen;
-            }else {
-                urlForCoppal = url + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate() + "&virtualType=False+&pathlength="+pathLen;
-            }*/
             respons = hrr.sendHTTPGetRequest(urlForCoppal);
-            /*if(fact.getPredicate().contains("ontology")) {
-                urlForCoppal = url + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate() + "&virtualType=True";
-                 respons = hrr.sendHTTPGetRequest(urlForCoppal);
-            }else {
-                urlForCoppal = url + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate() + "&virtualType=True";
-                respons = hrr.sendHTTPGetRequest(urlForCoppal);
-            }*/
+
             System.out.println(respons);
             System.out.println("-----------------------------");
 
@@ -167,7 +159,7 @@ public class RunCopaalPipeline {
 
     }
 
-    private static void updateProgress() {
+    private void updateProgress() {
         FileOutputStream fileOut = null;
         try {
             fileOut =
