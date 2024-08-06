@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,7 @@ public class BeliefTransferTest {
     public void Transfer_ShouldWork_WithValidYagoFile() throws Exception {
         BeliefTransform transform = new BeliefTransform();
         File resource = new ClassPathResource("data/TransformBeliefYagoTestFile.txt").getFile();
-        List<SimpleRDF> actual = transform.Transform(resource,"\t");
+        List<SimpleRDF> actual = transform.transform(resource,"\t");
 
         Assertions.assertEquals(actual.size(),3);
 
@@ -48,7 +47,7 @@ public class BeliefTransferTest {
     public void Transfer_ShouldWork_WithMultiObjectYagoFile() throws Exception {
         BeliefTransform transform = new BeliefTransform();
         File resource = new ClassPathResource("data/TransformBeliefYagoMultiObjectTestFile.txt").getFile();
-        List<SimpleRDF> actual = transform.Transform(resource,"\t");
+        List<SimpleRDF> actual = transform.transform(resource,"\t");
 
         Assertions.assertEquals(actual.size(),3);
 
@@ -72,7 +71,7 @@ public class BeliefTransferTest {
     public void Transfer_ShouldWork_WithValidNellFile() throws Exception {
         BeliefTransform transform = new BeliefTransform();
         File resource = new ClassPathResource("data/TransformBeliefNellTestFile.txt").getFile();
-        List<SimpleRDF> actual = transform.Transform(resource,"\t");
+        List<SimpleRDF> actual = transform.transform(resource,"\t");
 
         Assertions.assertEquals(actual.size(),3);
 

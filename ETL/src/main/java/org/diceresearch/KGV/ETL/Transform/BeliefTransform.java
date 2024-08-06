@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class BeliefTransform implements ITransform<List<SimpleRDF>, File>  {
     @Override
-    public List<SimpleRDF> Transform(File input, String splitter) throws Exception {
+    public List<SimpleRDF> transform(File input, String splitter) throws Exception {
 
         List<SimpleRDF> returnValue = new ArrayList<>();
 

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class TabSeperetadResultToMapTransform implements ITransform<Map<String,Double>,File> {
     @Override
-    public Map<String, Double>  Transform(File input , String splitter) throws Exception {
+    public Map<String, Double> transform(File input , String splitter) throws Exception {
         Map<String, Double> returnVal = new HashMap<>();
 
         String line ="";

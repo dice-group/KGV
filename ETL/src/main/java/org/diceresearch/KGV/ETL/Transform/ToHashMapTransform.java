@@ -7,7 +7,7 @@ import java.util.*;
 
 public class ToHashMapTransform implements ITransform<HashMap<String,String>, List<SimpleRDF>>{
     @Override
-    public HashMap<String, String> Transform(List<SimpleRDF> input, String splitter) throws Exception {
+    public HashMap<String, String> transform(List<SimpleRDF> input, String splitter) throws Exception {
         HashMap<String, String> returnVal = new HashMap<>();
 
         for(SimpleRDF rdf : input){

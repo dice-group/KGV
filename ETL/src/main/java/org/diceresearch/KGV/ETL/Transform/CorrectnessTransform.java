@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class CorrectnessTransform implements ITransform<HashMap<String, Boolean>, File> {
     @Override
-    public HashMap<String, Boolean> Transform(File input,String splitter) throws Exception {
+    public HashMap<String, Boolean> transform(File input, String splitter) throws Exception {
 
         HashMap<String, Boolean> returnValue = new HashMap<>();
         Scanner scanner = new Scanner(input);

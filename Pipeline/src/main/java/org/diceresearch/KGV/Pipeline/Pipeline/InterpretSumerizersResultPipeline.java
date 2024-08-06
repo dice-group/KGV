@@ -3,16 +3,13 @@ package org.diceresearch.KGV.Pipeline.Pipeline;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
-import org.apache.jena.base.Sys;
 import org.diceresearch.KGV.ETL.Extract.FileExtractorOutOfPackage;
 import org.diceresearch.KGV.ETL.Extract.IExtractor;
 import org.diceresearch.KGV.ETL.Model.SimpleRDF;
 import org.diceresearch.KGV.ETL.Transform.ITransform;
 import org.diceresearch.KGV.ETL.Transform.ToListTrensform;
-import org.yaml.snakeyaml.events.Event;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +30,7 @@ public class InterpretSumerizersResultPipeline {
         ITransform<List<List<String>>, File> transformer = new ToListTrensform();
 
         File file = (File)extractor.Extract("/home/farshad/repos/CopaalConfigTestResults/results (7th copy).tsv");
-        List<List<String>> toProcess = transformer.Transform(file,"\t");
+        List<List<String>> toProcess = transformer.transform(file,"\t");
 
         Map<String,TrueAndFalseCounter> map = new HashMap<>();
         // the columns

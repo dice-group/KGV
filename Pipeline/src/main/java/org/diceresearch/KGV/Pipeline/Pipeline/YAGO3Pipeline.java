@@ -3,13 +3,10 @@ package org.diceresearch.KGV.Pipeline.Pipeline;
 import org.diceresearch.KGV.ETL.Extract.FileExtractor;
 import org.diceresearch.KGV.ETL.Extract.IExtractor;
 import org.diceresearch.KGV.ETL.Load.FileLoader;
-import org.diceresearch.KGV.ETL.Model.SimpleLabeledRDF;
 import org.diceresearch.KGV.ETL.Model.SimpleRDF;
 import org.diceresearch.KGV.ETL.Transform.*;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,14 +31,14 @@ public class YAGO3Pipeline {
         ToHashMapTransform equivalenceTransformer = new ToHashMapTransform();
 
         //List<SimpleRDF> labeldYago = transform.Transform(yagoDBpediaInstances,"\t");
-        List<SimpleRDF> forCheck = transform.Transform(rdf4Check," ");
-        List<SimpleRDF> Yago2dbpediaPredicatesAsRDF = transform.Transform(yago3toDBpedia,"\t");
+        List<SimpleRDF> forCheck = transform.transform(rdf4Check," ");
+        List<SimpleRDF> Yago2dbpediaPredicatesAsRDF = transform.transform(yago3toDBpedia,"\t");
 
-        HashMap<String,String> Yago2dbpediaPredicates = equivalenceTransformer.Transform(Yago2dbpediaPredicatesAsRDF,"");
+        HashMap<String,String> Yago2dbpediaPredicates = equivalenceTransformer.transform(Yago2dbpediaPredicatesAsRDF,"");
 
         //Convert 1000 file to dbpedia rdf
         ToDBpediaTransform dBpediaTransformer = new ToDBpediaTransform(Yago2dbpediaPredicates);
-        List<SimpleRDF> forCheckDbpediaVersion = dBpediaTransformer.Transform(forCheck,"");
+        List<SimpleRDF> forCheckDbpediaVersion = dBpediaTransformer.transform(forCheck,"");
 
         FileLoader loader = new FileLoader();
 

@@ -36,13 +36,13 @@ public class ETLPipeline {
 
         List<SimpleLabeledRDF>  labeldYago =
                 beliefTransform.Merge(
-                        (HashMap<String, Boolean>) correctnessTransform.Transform(YagoDatasetLabels,"\t"),
-                        beliefTransform.Transform(YagoDataset,"\t"));
+                        (HashMap<String, Boolean>) correctnessTransform.transform(YagoDatasetLabels,"\t"),
+                        beliefTransform.transform(YagoDataset,"\t"));
 
         List<SimpleLabeledRDF>  labeldNell =
                 beliefTransform.Merge(
-                        (HashMap<String, Boolean>) correctnessTransform.Transform(NellDatasetLabels,"\t"),
-                        beliefTransform.Transform(NellDataset,"\t"));
+                        (HashMap<String, Boolean>) correctnessTransform.transform(NellDatasetLabels,"\t"),
+                        beliefTransform.transform(NellDataset,"\t"));
 
 
     }

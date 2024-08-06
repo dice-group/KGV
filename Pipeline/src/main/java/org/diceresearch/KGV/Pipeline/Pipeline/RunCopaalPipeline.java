@@ -8,7 +8,6 @@ import org.diceresearch.KGV.ETL.Model.SimpleRDF;
 import org.diceresearch.KGV.ETL.Transform.*;
 import org.diceresearch.KGV.QueryRunner.QueryRunner.HttpRequestRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.HashMap;
@@ -16,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 
-@Service
 //run coppal pipeline , read file for each fact call copaal and save result
 public class RunCopaalPipeline {
     String fileNameConst ;
@@ -29,10 +27,30 @@ public class RunCopaalPipeline {
     String FileNameValid;
     String FileName;
 
+    boolean reverseTheSubjectAndObject = false;
+
     Set<String> acceptAblePredicates;
 
     static HashMap<String,String> progress = new HashMap<>();
 
+    public static void main(String[] args) throws Exception {
+        //String fileToProcess = "/home/farshad/repos/KGV/KGEvalData/YAGO/yago_beliefs.ttl";
+        String fileToProcess = "/home/farshad/experiments/yago2Copaal/subsetResultRegenarated/check_copaal_nowriter.txt";
+        String locationForSaveTheResults = "/home/farshad/experiments/yago2Copaal/subsetResultRegenarated/results/";
+        String fileNameConst = "yagoSubset2remainingstriples";
+        String copaalEndPoint = "http://synthg-fact-leapfrog.cs.upb.de:8484/api/v1/validate?";
+        //String copaalEndPoint = "http://localhost:8082/api/v1/validate?";
+        String acceptablePredicates = "http://dbpedia.org/ontology/birthPlace";
+        RunCopaalPipeline p = new RunCopaalPipeline(fileToProcess, locationForSaveTheResults, fileNameConst, copaalEndPoint);//,acceptablePredicates);
+        p.run();
+    }
+
+    public RunCopaalPipeline(String fileToProcess , String locationForSaveTheResults, String fileNameConst, String copaalEndPoint){
+        this.locationForSaveTheResults = locationForSaveTheResults;
+        this.fileToProcess = fileToProcess;
+        this.fileNameConst = fileNameConst;
+        this.copaalEndPoint = copaalEndPoint;
+    }
 
     public RunCopaalPipeline(String fileToProcess , String locationForSaveTheResults, String fileNameConst, String copaalEndPoint, String acceptablePredicates){
         this.locationForSaveTheResults = locationForSaveTheResults;
@@ -55,9 +73,9 @@ public class RunCopaalPipeline {
 
     public void run() throws Exception {
         System.out.println("Start running the pipeline");
-        ProgressFileName = locationForSaveTheResults+"prf_"+fileNameConst+".txt";
-        FileNameValid = locationForSaveTheResults+"resultIsValid_"+fileNameConst+".txt";
-        FileName = locationForSaveTheResults+"result_"+fileNameConst+".txt";
+        ProgressFileName = locationForSaveTheResults+"2prf_"+fileNameConst+".txt";
+        FileNameValid = locationForSaveTheResults+"0shortResults_"+fileNameConst+".txt";
+        FileName = locationForSaveTheResults+"1resultWithDetail_"+fileNameConst+".txt";
 
 
         System.out.println("ProgressFileName is : "+ProgressFileName);
@@ -87,9 +105,13 @@ public class RunCopaalPipeline {
         File rdf4Check = (File) extractor.Extract(fileToProcess);
 
         //SimpleRdfRandomIdTransform transform = new SimpleRdfRandomIdTransform();
-        TTLtoSimpleRDFTransform transform = new TTLtoSimpleRDFTransform();
-        RDFModelTransform rdfTransform = new RDFModelTransform();
-        List<SimpleRDF> forCheck = transform.Transform(rdfTransform.Transform(rdf4Check,"")," ");
+
+        //TTLtoSimpleRDFTransform transform = new TTLtoSimpleRDFTransform();
+        //RDFModelTransform rdfTransform = new RDFModelTransform();
+
+        //List<SimpleRDF> forCheck = transform.transform(rdfTransform.transform(rdf4Check,"")," ");
+        CopaalOutPutTransform transform = new CopaalOutPutTransform();
+        List<SimpleRDF> forCheck = transform.transform(rdf4Check,"\t");
 
         System.out.println(forCheck.size() + " facts for check extracted");
 
@@ -98,8 +120,10 @@ public class RunCopaalPipeline {
         //.replace("property","ontology")
         int counter = 0;
         for(SimpleRDF fact : forCheck){
-            if(!acceptAblePredicates.contains(fact.getPredicate())){
-                continue;
+            if(acceptAblePredicates!=null){
+                if(!acceptAblePredicates.contains(fact.getPredicate())){
+                    continue;
+                }
             }
             counter = counter +1;
 
@@ -117,8 +141,11 @@ public class RunCopaalPipeline {
             String respons ="";
             String urlForCoppal = "";
 
-
-            urlForCoppal = copaalEndPoint + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate();
+            if(reverseTheSubjectAndObject){
+                urlForCoppal = copaalEndPoint + "subject=" + fact.getObject() + "&object=" + fact.getSubject() + "&property=" + fact.getPredicate();
+            }else {
+                urlForCoppal = copaalEndPoint + "subject=" + fact.getSubject() + "&object=" + fact.getObject() + "&property=" + fact.getPredicate();
+            }
 
             respons = hrr.sendHTTPGetRequest(urlForCoppal);
 
@@ -147,7 +174,7 @@ public class RunCopaalPipeline {
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw))
             {
-                out.println(fact.getSubject()+"\t"+fact.getPredicate()+"\t"+fact.getObject()+"\t"+json.get("veracityValue").toString());
+                out.println(fact.getSubject()+"\t"+fact.getPredicate()+"\t"+fact.getObject()+"\t"+json.get("veracityValue").toString()+"\t"+fact.getId());
             } catch (IOException e) {
 
             }

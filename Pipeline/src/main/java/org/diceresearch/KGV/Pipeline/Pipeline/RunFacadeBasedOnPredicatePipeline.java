@@ -2,7 +2,6 @@ package org.diceresearch.KGV.Pipeline.Pipeline;
 
         import net.minidev.json.JSONObject;
         import net.minidev.json.parser.JSONParser;
-        import org.apache.jena.base.Sys;
         import org.diceresearch.KGV.ETL.Extract.FileExtractor;
         import org.diceresearch.KGV.ETL.Extract.IExtractor;
         import org.diceresearch.KGV.ETL.Model.SimpleRDF;
@@ -72,7 +71,7 @@ public class RunFacadeBasedOnPredicatePipeline {
 
         SimpleRdfRandomIdTransform transform = new SimpleRdfRandomIdTransform();
 
-        List<SimpleRDF> forCheck = transform.Transform(rdf4Check," ");
+        List<SimpleRDF> forCheck = transform.transform(rdf4Check," ");
 
         HttpRequestRunner hrr = new HttpRequestRunner(new RestTemplateBuilder());
 //{{host}}/api/v1/checkFact?subject=http://dbpedia.org/resource/Bill_Gates&object=http://dbpedia.org/resource/United_States&predicate=http://dbpedia.org/ontology/nationality&virtualtype=False&pathlength=2&verbalize=True

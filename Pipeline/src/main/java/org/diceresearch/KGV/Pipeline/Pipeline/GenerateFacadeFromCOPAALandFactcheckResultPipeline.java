@@ -1,12 +1,10 @@
 package org.diceresearch.KGV.Pipeline.Pipeline;
 
-import org.diceresearch.KGV.ETL.Extract.FileExtractor;
 import org.diceresearch.KGV.ETL.Extract.FileExtractorOutOfPackage;
 import org.diceresearch.KGV.ETL.Extract.IExtractor;
 import org.diceresearch.KGV.ETL.Transform.TabSeperetadResultToMapTransform;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 /*
  read text result of coppal and fact check with this format
@@ -48,8 +46,8 @@ public class GenerateFacadeFromCOPAALandFactcheckResultPipeline {
 
         TabSeperetadResultToMapTransform transformer = new TabSeperetadResultToMapTransform();
 
-        Map<String,Double> copaalMap  = transformer.Transform(copaalResult,"\t");
-        Map<String,Double> factCheckMap = transformer.Transform(factCheckResult,"\t");
+        Map<String,Double> copaalMap  = transformer.transform(copaalResult,"\t");
+        Map<String,Double> factCheckMap = transformer.transform(factCheckResult,"\t");
 
         if(copaalMap.size()!=factCheckMap.size()){
             throw new Exception("the size is not the same "+ FileNameValidCOPAAL+ " "+FileNameValidFactCheck);

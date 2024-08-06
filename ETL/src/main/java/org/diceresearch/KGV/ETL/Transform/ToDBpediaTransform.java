@@ -18,7 +18,7 @@ public class ToDBpediaTransform implements ITransform<List<SimpleRDF>,List<Simpl
     }
 
     @Override
-    public List<SimpleRDF> Transform(List<SimpleRDF> input, String splitter) throws Exception {
+    public List<SimpleRDF> transform(List<SimpleRDF> input, String splitter) throws Exception {
         List<SimpleRDF> retVal = new ArrayList<>();
         for(SimpleRDF rdf : input){
             System.out.println(rdf);

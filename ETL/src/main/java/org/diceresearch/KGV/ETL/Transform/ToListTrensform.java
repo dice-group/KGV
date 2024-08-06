@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ToListTrensform implements ITransform<List<List<String>>, File>{
     @Override
-    public List<List<String>> Transform(File input, String splitter) throws Exception {
+    public List<List<String>> transform(File input, String splitter) throws Exception {
         List<List<String>> returnVal = new ArrayList<>();
 
         Scanner scanner = new Scanner(input);

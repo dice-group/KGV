@@ -1114,9 +1114,6 @@ st:8244 rdf:type rdf:Statement .
 st:8244 rdf:subject yago:Gwyneth_Strong .
 st:8244 rdf:predicat yago:isMarriedTo .
 st:8244 rdf:object yago:Jesse_Birdsall .
-8266	Daniel_Rodney	wasBornIn	Lewes	_Delaware
-8267	Daniel_Rodney	diedIn	Lewes	_Delaware
-8268	Daniel_Rodney	livesIn	Lewes	_Delaware
 st:8298 rdf:type rdf:Statement .
 st:8298 rdf:subject yago:Alexandre_Astruc .
 st:8298 rdf:predicat yago:created .
@@ -1945,15 +1942,6 @@ st:11644 rdf:type rdf:Statement .
 st:11644 rdf:subject yago:Alex_Fong__actor_ .
 st:11644 rdf:predicat yago:isMarriedTo .
 st:11644 rdf:object yago:Hoyan_Mok .
-11725	Arthur_Rankin	directed	_Jr.	The_Last_Unicorn__film_
-11726	Arthur_Rankin	directed	_Jr.	The_Flight_of_Dragons
-11727	Arthur_Rankin	directed	_Jr.	The_Return_of_the_King__1980_film_
-11728	Arthur_Rankin	directed	_Jr.	The_Hobbit__1977_film_
-11729	Arthur_Rankin	produced	_Jr.	The_Mad	_Mad	_Mad_Comedians
-11730	Arthur_Rankin	directed	_Jr.	The_Mad	_Mad	_Mad_Comedians
-11731	Arthur_Rankin	produced	_Jr.	The_Daydreamer
-11732	Arthur_Rankin	created	_Jr.	The_Daydreamer
-11733	Arthur_Rankin	produced	_Jr.	The_Last_Dinosaur
 st:11769 rdf:type rdf:Statement .
 st:11769 rdf:subject yago:Prince_Eduard_of_Saxe-Altenburg .
 st:11769 rdf:predicat yago:isMarriedTo .
@@ -2398,9 +2386,6 @@ st:14950 rdf:type rdf:Statement .
 st:14950 rdf:subject yago:Joe_McStravick .
 st:14950 rdf:predicat yago:directed .
 st:14950 rdf:object yago:Murphy_771 .
-15087	Joseph_Warder	wasBornIn	Jeffersonville	_Indiana
-15088	Joseph_Warder	diedIn	Jeffersonville	_Indiana
-15089	Joseph_Warder	livesIn	Jeffersonville	_Indiana
 st:15558 rdf:type rdf:Statement .
 st:15558 rdf:subject yago:Rajan_Khosa .
 st:15558 rdf:predicat yago:created .
@@ -2689,8 +2674,6 @@ st:17908 rdf:type rdf:Statement .
 st:17908 rdf:subject yago:Leonid_Trauberg .
 st:17908 rdf:predicat yago:directed .
 st:17908 rdf:object yago:The_Vyborg_Side .
-17955	Giuseppe_Colizzi	created	All_the_Way	_Boys
-17956	Giuseppe_Colizzi	directed	All_the_Way	_Boys
 st:17982 rdf:type rdf:Statement .
 st:17982 rdf:subject yago:Noboru_Iguchi .
 st:17982 rdf:predicat yago:created .
@@ -2767,9 +2750,6 @@ st:18693 rdf:type rdf:Statement .
 st:18693 rdf:subject yago:Paul_Greenwood .
 st:18693 rdf:predicat yago:isMarriedTo .
 st:18693 rdf:object yago:Diane_Keen .
-18732	Daniel_C._Miller	isLeaderOf	Harrisburg	_Pennsylvania
-18733	Daniel_C._Miller	wasBornIn	Harrisburg	_Pennsylvania
-18734	Daniel_C._Miller	livesIn	Harrisburg	_Pennsylvania
 st:18776 rdf:type rdf:Statement .
 st:18776 rdf:subject yago:Cynthia_Villar .
 st:18776 rdf:predicat yago:isMarriedTo .
@@ -2798,9 +2778,6 @@ st:19019 rdf:type rdf:Statement .
 st:19019 rdf:subject yago:Stefania_Grodzieńska .
 st:19019 rdf:predicat yago:isMarriedTo .
 st:19019 rdf:object yago:Jerzy_Jurandot .
-19070	Michael_Bell__mayor_	isLeaderOf	Toledo	_Ohio
-19071	Michael_Bell__mayor_	wasBornIn	Toledo	_Ohio
-19072	Michael_Bell__mayor_	livesIn	Toledo	_Ohio
 st:19133 rdf:type rdf:Statement .
 st:19133 rdf:subject yago:Param_Gill .
 st:19133 rdf:predicat yago:created .
@@ -5321,7 +5298,6 @@ st:31095 rdf:type rdf:Statement .
 st:31095 rdf:subject yago:Gloria_Marsh .
 st:31095 rdf:predicat yago:isMarriedTo .
 st:31095 rdf:object yago:Dimitri_Marick .
-31098	Anna_Rice_Cooke	hasChild	Charles_Montague_Cooke	_Jr.
 st:31103 rdf:type rdf:Statement .
 st:31103 rdf:subject yago:Prince_Paul_of_Württemberg .
 st:31103 rdf:predicat yago:isMarriedTo .

@@ -1,7 +1,5 @@
 package org.diceresearch.KGV.Pipeline.FactBenchPipeline;
 
-import net.minidev.json.parser.ParseException;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
@@ -59,12 +57,12 @@ public class ProcessTheResultConvertToFormat {
         // load refrence file
         File refrence = (File) extractor.Extract(refrenceFilePath);
         RDFModelTransform rdfModelTransform = new RDFModelTransform("nt");
-        Model model= rdfModelTransform.Transform(refrence,"");
+        Model model= rdfModelTransform.transform(refrence,"");
 
         // read result file
         File result = (File) extractor.Extract(resultFileToProccessPath);
         ToListTrensform transform = new ToListTrensform();
-        List<List<String>> listForConvert = transform.Transform(result,"\t");
+        List<List<String>> listForConvert = transform.transform(result,"\t");
 
         // convert
 

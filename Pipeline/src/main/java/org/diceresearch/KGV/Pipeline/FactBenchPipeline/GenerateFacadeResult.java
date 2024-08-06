@@ -59,10 +59,10 @@ public class GenerateFacadeResult {
 
         File refrence = (File) extractor.Extract(refrenceFilePath);
         RDFModelTransform rdfModelTransform = new RDFModelTransform("nt");
-        Model model= rdfModelTransform.Transform(refrence,"");
+        Model model= rdfModelTransform.transform(refrence,"");
 
         File copaalFile = (File) extractor.Extract(copaalRefrenceFilePath);
-        Model copaalModel= rdfModelTransform.Transform(copaalFile,"");
+        Model copaalModel= rdfModelTransform.transform(copaalFile,"");
 
 
         Scanner scanner = new Scanner(file);

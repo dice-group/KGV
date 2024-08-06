@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 
 public class OntologyModelTransform implements ITransform<OntModel, File>{
     @Override
-    public OntModel Transform(File input, String splitter) throws Exception {
+    public OntModel transform(File input, String splitter) throws Exception {
         try {
             OntModel model = ModelFactory.createOntologyModel();
             model.read(new FileInputStream(input), "", null);

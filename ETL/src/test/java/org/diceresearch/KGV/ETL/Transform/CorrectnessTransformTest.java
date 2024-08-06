@@ -44,7 +44,7 @@ public class CorrectnessTransformTest {
     public void Transform_ShouldWork_withValidFile() throws Exception {
         ITransform<HashMap<String, Boolean>, File> transform = new CorrectnessTransform();
         File resource = new ClassPathResource("data/TransferCorrectnessTestFile.txt").getFile();
-        HashMap<String, Boolean> actual = transform.Transform(resource,"\t");
+        HashMap<String, Boolean> actual = transform.transform(resource,"\t");
         Assertions.assertEquals(actual.get("201179"),true);
         Assertions.assertEquals(actual.get("201138"),false);
         Assertions.assertEquals(actual.get("201137"),true);

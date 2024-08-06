@@ -20,7 +20,7 @@ public class RDFModelTransform implements ITransform<Model, File>{
     }
 
     @Override
-    public Model Transform(File input, String splitter) throws Exception {
+    public Model transform(File input, String splitter) {
         try {
             Model model = ModelFactory.createDefaultModel();
             model.read(new FileInputStream(input), "",type);

@@ -21,7 +21,6 @@
 		<module>ETL</module>
         <module>Pipeline</module>
 		<module>QueryRunner</module>
-		<module>Aplication</module>
 	</modules>
 
 </project>

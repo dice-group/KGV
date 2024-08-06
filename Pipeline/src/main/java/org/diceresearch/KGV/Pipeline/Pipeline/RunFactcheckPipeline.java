@@ -2,7 +2,7 @@ package org.diceresearch.KGV.Pipeline.Pipeline;
 
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
-import org.diceresearch.KGV.ETL.Extract.FileExtractor;
+import org.diceresearch.KGV.ETL.Extract.FileExtractorOutOfPackage;
 import org.diceresearch.KGV.ETL.Extract.IExtractor;
 import org.diceresearch.KGV.ETL.Model.SimpleRDF;
 import org.diceresearch.KGV.ETL.Transform.SimpleRdfRandomIdTransform;
@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 // check facts with factcheck
 public class RunFactcheckPipeline {
-    static String predicate = "affiliation";
+    static String predicate = "newFavelWrong";
 
-    static String adr ="/home/farshad/repos/KGV/ResultsFactCheck";
+    static String adr ="/home/farshad/experiments/FAVEL/20122022";
 
     static String sss = predicate+"_FactCheck";
     static String ProgressFileName = adr+"/prf_FactCheck_"+sss+".txt";
@@ -68,25 +68,24 @@ public class RunFactcheckPipeline {
 
 
 
-        IExtractor extractor = new FileExtractor();
+        IExtractor extractor = new FileExtractorOutOfPackage();
 
-        File rdf4Check = (File) extractor.Extract("Co" +
-                "nverted1000FileYago3.txt");
+        File rdf4Check = (File) extractor.Extract("/home/farshad/experiments/FAVEL/mergedfileTestWrong.nt");
 
         SimpleRdfRandomIdTransform transform = new SimpleRdfRandomIdTransform();
 
-        List<SimpleRDF> forCheck = transform.Transform(rdf4Check," ");
+        List<SimpleRDF> forCheck = transform.transform(rdf4Check," ");
 
         HttpRequestRunner hrr = new HttpRequestRunner(new RestTemplateBuilder());
 
-        String url = "http://localhost:8888/api/checkfact?";
+        String url = "http://localhost:8080/api/checkfact?";
 
         //.replace("property","ontology")
         for(SimpleRDF fact : forCheck){
 
-            if(!fact.getPredicate().contains(predicate)){
+/*            if(!fact.getPredicate().contains(predicate)){
                 continue;
-            }
+            }*/
 
             if(progress.containsKey(key(fact))){
                 System.out.println("it was progressed before"+fact);

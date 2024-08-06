@@ -1,6 +1,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix yago: <http://yago-knowledge.org/resource/>
-@prefix st: <http://kgeval.dataset.org/nell/>
+@prefix yago: <http://yago-knowledge.org/resource/> .
+@prefix st: <http://kgeval.dataset.org/nell/> .
 
 st:1 rdf:type rdf:Statement .
 st:1 rdf:subject yago:Azerbaijan .

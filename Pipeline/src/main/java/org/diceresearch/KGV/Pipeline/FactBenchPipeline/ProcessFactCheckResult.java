@@ -7,7 +7,6 @@ import org.diceresearch.KGV.ETL.Transform.RDFModelTransform;
 import org.diceresearch.KGV.utility.TripleExtractor;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 // get a file with this format
@@ -46,7 +45,7 @@ public class ProcessFactCheckResult {
 
         File refrence = (File) extractor.Extract(refrenceFilePath);
         RDFModelTransform rdfModelTransform = new RDFModelTransform("nt");
-        Model model= rdfModelTransform.Transform(refrence,"");
+        Model model= rdfModelTransform.transform(refrence,"");
 
 
         Scanner scanner = new Scanner(file);

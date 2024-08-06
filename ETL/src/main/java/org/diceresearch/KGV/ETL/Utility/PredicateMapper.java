@@ -6,7 +6,6 @@ import org.apache.jena.rdf.model.Model;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.IOException;
 
 @Component
 public class PredicateMapper {
@@ -23,7 +22,7 @@ public class PredicateMapper {
         this.extractor = extractor;
         this.transform = transform;
         File file = extractor.Extract("./data/shapes.ttl");
-        model = transform.Transform(file,"") ;
+        model = transform.transform(file,"") ;
     }
 
     public String ToWikiData(String fromYago){

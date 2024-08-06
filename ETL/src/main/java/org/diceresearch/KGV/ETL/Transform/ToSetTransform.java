@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class ToSetTransform implements ITransform<Set<String>, File>{
     @Override
-    public Set<String> Transform(File input, String splitter) throws Exception {
+    public Set<String> transform(File input, String splitter) throws Exception {
         Set<String> returnVal = new HashSet<>();
 
         Scanner scanner = new Scanner(input);

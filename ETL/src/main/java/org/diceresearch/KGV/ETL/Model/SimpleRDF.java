@@ -11,9 +11,9 @@ public class SimpleRDF {
 
     public SimpleRDF(){}
 
-    public SimpleRDF(String id, String sobject, String predicate, String object) {
+    public SimpleRDF(String id, String subject, String predicate, String object) {
         Id = id;
-        Subject = sobject;
+        Subject = subject;
         Predicate = predicate;
         Object = object;
     }
@@ -50,6 +50,14 @@ public class SimpleRDF {
         Object = object;
     }
 
+    public Boolean getCorrectness() {
+        return correctness;
+    }
+
+    public void setCorrectness(Boolean correctness) {
+        this.correctness = correctness;
+    }
+
     @Override
     public String toString() {
         return this.getSubject()+" "+this.getPredicate()+" "+this.getObject();
@@ -66,6 +74,14 @@ public class SimpleRDF {
                 Objects.equals(getObject(), simpleRDF.getObject());
     }
 
+    public boolean sameTriple(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleRDF simpleRDF = (SimpleRDF) o;
+        return  Objects.equals(getSubject(), simpleRDF.getSubject()) &&
+                Objects.equals(getPredicate(), simpleRDF.getPredicate()) &&
+                Objects.equals(getObject(), simpleRDF.getObject());
+    }
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getSubject(), getPredicate(), getObject());
